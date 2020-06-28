@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import Input from "./InputComponent";
-// import FunctionalInput from "./Input";
+import React, { useState, useEffect } from "react";
+import FunctionalInput from "./Input";
 import "./styles.css";
 
 function validateEmail(email) {
@@ -9,42 +8,30 @@ function validateEmail(email) {
 }
 
 export default function App() {
-  const [inputValue, setInputValue] = useState("");
   const [isValid, setIsValid] = useState(true);
   const emailRef = React.createRef();
 
   const onValidate = () => {
-    console.log(emailRef.current);
-    setIsValid(validateEmail(inputValue));
-    if (!isValid) {
-      // emailRef.current.focus();
-      emailRef.current.focusInput();
-    }
+    console.log(emailRef.current.value, validateEmail(emailRef.current.value));
+    setIsValid(validateEmail(emailRef.current.value));
   };
+  useEffect(() => {
+    if (!isValid) {
+      emailRef.current.focus();
+    }
+  }, [isValid, emailRef]);
   return (
     <div className="App">
       <form>
         <label htmlFor="email">Email</label>
-        {/* <input name="email" type="text" id="email" ref={emailRef} /> */}
-        <Input
-          onChange={value => {
-            setInputValue(value);
-          }}
-          value={inputValue}
-          name="email"
-          type="text"
-          id="email"
-          ref={emailRef}
-          hasError={!isValid}
-        />
-        {/* <FunctionalInput
+        <FunctionalInput
           errorText={isValid ? "" : "validation error"}
           name="email"
           type="text"
           id="email"
           ref={emailRef}
         />
-        */}
+
         <label htmlFor="password">password</label>
         <input name="password" type="password" />
         <button
