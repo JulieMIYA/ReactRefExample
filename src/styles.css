@@ -1,0 +1,9 @@
+body {
+  font-family: sans-serif;
+}
+
+form {
+  display: grid;
+  grid-template-columns: min-content min-content;
+  grid-gap: 20px;
+}
